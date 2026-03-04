@@ -1,0 +1,20 @@
+{
+  "name": "Kutya Pay Store",
+  "categories": [
+    {
+      "type": "мужская одежда",
+      "products": [
+        {
+          "name": "Футболка",
+          "price": 1200,
+          "inStock": true
+        },
+        {
+          "name": "Куртка",
+          "price": 3500,
+          "inStock": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kutya Pay Store</title>  
+  <script defer src="./index.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #000;
+      color: #fcb676;
+    }
+    header, footer {
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #fcb676;
+      position: relative;
+    }
+    header img {
+      height: 240px;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #fcb676;
+      font-weight: bold;
+    }
+    .cart-icon {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      cursor: pointer;
+    }
+    .cart-icon img {
+      width: 40px;
+      height: 40px;
+    }
+    #cart-count {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #fcb676;
+      color: black;
+      border-radius: 50%;
+      padding: 4px 8px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 30px 10px;
+    }
+    .category-item {
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .category-item img {
+      width: 180px;
+      height: 240px;
+      object-fit: cover;
+      border: 3px solid #fcb676;
+      border-radius: 12px;
+    }
+    .category-item:hover {
+      transform: scale(1.05);
+    }
+
+    .category-block {
+      display: none;
+      padding: 20px;
+    }
+    .subcategory {
+      margin-top: 20px;
+    }
+    .subcategory-toggle {
+      background-color: #fcb676;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      background: #111;
+      border: 1px solid #fcb676;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      padding: 10px;
+      transition: transform 0.3s;
+    }
+    .product img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+    }
+    .product button {
+      background-color: #fcb676;
+      border: none;
+      color: black;
+      padding: 8px 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #cart {
+      display: none;
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: #111;
+      color: #fcb676;
+      border: 2px solid #fcb676;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      max-height: 500px;
+      overflow-y: auto;
+      z-index: 999;
+    }
+    #cart h3 {
+      margin-top: 0;
+    }
+    #cart-items li {
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .categories {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="./logo/Снимок экрана 2025-04-15 105249.png" alt="Kutya Pay Logo">
+    <nav>
+      <a href=" https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=o105efd">
+        <img style="width: 100px;height: 100px;" src="./icone/5118a61a-ada4-4abd-9299-9476887b382a.jpg" alt="">
+      </a>
+      <a href="https://t.me/KUTYA08">
+        <img style="width: 100px;height: 100px;"  src="./icone/telegram gold.jpg" alt="">
+      </a>
+      <a href="tel:+996707644064">
+        <img style="width: 100px;height: 100px;"  src="./icone/teléfono gold 2.jpg" alt="">
+      </a>
+     <a href="https://wa.me/707644064">
+      <img style="width: 100px;height: 100px;"  src="./icone/whatsapp gold.jpg" alt="">
+     </a>
+    </nav>
+      <nav>
+      <a href="#">Главная</a>
+      <a href="#shop">Магазин</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <div class="cart-icon" onclick="toggleCart()">
+      <img src="./icone/Снимок экрана 2025-04-19 001105.png" alt="Корзина">
+      <span id="cart-count">0</span>
+    </div>
+  </header>
+
+  <main id="shop">
+    <h1 style="text-align:center; margin-top: 40px;">Наша коллекция</h1>
+
+    <div class="categories">
+      <div class="category-item" onclick="toggleCategory('men')">
+        <img src="./категории/чико.jpg" alt="Мужская одежда">
+        <p>Мужская одежда</p>
+      </div>
+      <div class="category-item" onclick="toggleCategory('women')">
+        <img src="./категории/лима.jpg" alt="Женская одежда">
+        <p>Женская одежда</p>
+      </div>
+      <div class="category-item" onclick="toggleCategory('kids')">
+        <img src="./категории/кевинjpg" alt="Детская одежда">
+        <p>Детская одежда</p>
+      </div>
+    </div>
+
+    <!-- Категории с подкатегориями -->
+
+    <div class="category-block" id="men">
+      <h2>Мужская одежда</h2>
+      <div class="subcategory">
+        <button class="subcategory-toggle" onclick="toggleSub('men-single')">Одиночный товар</button>
+        <div class="product-grid" id="men-single" style="display:none"></div>
+      </div>
+      <div class="subcategory">
+        <button class="subcategory-toggle" onclick="toggleSub('men-set')">Набор</button>
+        <div class="product-grid" id="men-set" style="display:none"></div>
+      </div>
+    </div>
+
+    <div class="category-block" id="women">
+      <h2>Женская одежда</h2>
+      <div class="subcategory">
+        <button class="subcategory-toggle" onclick="toggleSub('women-single')">Одиночный товар</button>
+        <div class="product-grid" id="women-single" style="display:none"></div>
+      </div>
+      <div class="subcategory">
+        <button class="subcategory-toggle" onclick="toggleSub('women-set')">Набор</button>
+        <div class="product-grid" id="women-set" style="display:none"></div>
+      </div>
+    </div>
+
+    <div class="category-block" id="kids">
+      <h2>Детская одежда</h2>
+      <div class="subcategory">
+        <button class="subcategory-toggle" onclick="toggleSub('kids-single')">Одиночный товар</button>
+        <div class="product-grid" id="kids-single" style="display:none"></div>
+      </div>
+      <div class="subcategory">
+        <button class="subcategory-toggle" onclick="toggleSub('kids-set')">Набор</button>
+        <div class="product-grid" id="kids-set" style="display:none"></div>
+      </div>
+    </div>
+  </main>
+
+  <div id="cart">
+    <h3>Корзина</h3>
+    <ul id="cart-items"></ul>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Kutya Pay.</p>
+  </footer>
+
+  <script>
+    const products = {
+      men: {
+        single: [
+          { title: "Худи черное", price: "50.00$", img: "./мужская одежда/одиночный товар/худи.jpg" },
+          { title: "Ползамок классика", price: "30.00$", img: "./мужская одежда/одиночный товар/привет.jpg" },
+          { title: "Ползамок NIKE", price: "60.00$", img: "./мужская одежда/одиночный товар/ползамок найк.jpg" },
+          { title: "Куртка", price: "80.00$", img: "./мужская одежда/одиночный товар/куртка.jpg" },
+          { title: "Ветровка NIKE", price: "90.00$", img: "./мужская одежда/одиночный товар/ветровка найк.jpg" },
+          { title: "Шорты", price: "30.00$", img: "./мужская одежда/одиночный товар/шорты.jpg" },
+          { title: "Широкие штаны", price: "35.00$", img: "./мужская одежда/одиночный товар/широкие штаны.jpg" },
+          { title: "Шапки", price: "15.00$", img: "./мужская одежда/одиночный товар/шапки.jpg" },
+          { title: "Туфли", price: "40.00$", img: "./мужская одежда/одиночный товар/туфли.jpg" },
+          { title: "Футболки", price: "18.00$", img: "./мужская одежда/одиночный товар/футболка.jpg" },
+          { title: "Носки", price: "10.00$", img: "./мужская одежда/одиночный товар/носки.jpg" },
+          { title: "Ремни", price: "28.00$", img: "./мужская одежда/одиночный товар/ремни.jpg" },
+        ],
+        set: [
+          { title: "Набор: Городской подчерк", price: "70.00$", img: "./мужская одежда/набор/Городской почерк.jpg" },
+          { title: "Набор: Парень из будущего", price: "110.00$", img: "./мужская одежда/набор/Парень из будущего.jpg" },
+          { title: "Набор: Потерян в стиле", price: "85.00$", img: "./мужская одежда/набор/Потерян в стиле.jpg" },
+          { title: "Набор: Своя волна", price: "45.00$", img: "./мужская одежда/набор/хело.jpg" },
+          { title: "Набор: Тихая роскошь", price: "105.00$", img: "./мужская одежда/набор/Тихая роскошь.jpg" },
+          { title: "Набор: В кадре — не случайность", price: "95.00$", img: "./мужская одежда/набор/В кадре — не случайность.jpg" },
+          { title: "Набор: Детали громче слов", price: "85.00$", img: "./мужская одежда/набор/Детали громче слов.jpg" },
+          { title: "Набор: Литмасили", price: "98.00$", img: "./мужская одежда/набор/Литмасили.jpg" },
+          { title: "Набор: Не объясняю. Просто чувствуй", price: "99.00$", img: "./мужская одежда/набор/Не объясняю. Просто чувствуй.jpg" },
+          { title: "Набор: Невесомо, но с характером", price: "130.00$", img: "./мужская одежда/набор/Невесомо, но с характером.jpg" },
+          { title: "Набор: Тихий шум", price: "161.00$", img: "./мужская одежда/набор/Тихий шум.jpg" },
+          { title: "Набор: Это не стиль. Это настроение", price: "109.00$", img: "./мужская одежда/набор/Это не стиль. Это настроение..jpg" },
+        ]
+      },
+      women: {
+        single: [
+          { title: "Свитер", price: "40.00$", img: "./женская одежда/одиночный товар/водолазка.jpg" },
+          { title: "Пальто", price: "55.00$", img: "./женская одежда/одиночный товар/пальто.jpg" },
+          { title: "Рубашка", price: "35.00$", img: "./женская одежда/одиночный товар/рубашка.jpg" },
+          { title: "Футболка", price: "75.00$", img: "./женская одежда/одиночный товар/футболка.jpg" },
+          { title: "Штаны", price: "25.00$", img: "./женская одежда/одиночный товар/штаны.jpg" },
+          { title: "Каблуки", price: "40.00$", img: "./женская одежда/одиночный товар/каблуки.jpg" },
+          { title: "Коричневое платье", price: "100.00$", img: "./женская одежда/одиночный товар/коричневое платье.jpg" },
+          { title: "Куртка", price: "110.00$", img: "./женская одежда/одиночный товар/куртка.jpg" },
+          { title: "Ползамок", price: "65.00$", img: "./женская одежда/одиночный товар/ползамок.jpg" },
+          { title: "Черное платье", price: "120.00$", img: "./женская одежда/одиночный товар/черное платье.jpg" },
+          { title: "Шапка", price: "20.00$", img: "./женская одежда/одиночный товар/шапка.jpg" },
+          { title: "Шуба", price: "136.00$", img: "./женская одежда/одиночный товар/шуба.jpg" },
+        ],
+        set: [
+          { title: "Набор: Для неё", price: "85.00$", img: "./женская одежда/набор/Для неё.jpg" },
+          { title: "Набор: Магия уюта", price: "65.00$", img: "./женская одежда/набор/Магия уюта.jpg" },
+          { title: "Набор: Моменты счастья", price: "90.00$", img: "./женская одежда/набор/Моменты счастья.jpg" },
+          { title: "Набор: Нежное утро", price: "120.00$", img: "./женская одежда/набор/Нежное утро.jpg" },
+          { title: "Набор: Тепло и уют", price: "150.00$", img: "./женская одежда/набор/Тепло и уют.jpg" },
+          { title: "Набор: Карамель и бетон", price: "110.00$", img: "./женская одежда/набор/Карамель и бетон.jpg" },
+          { title: "Набор: Молочная тишина", price: "123.00$", img: "./женская одежда/набор/молочная тишина.jpg" },
+          { title: "Набор: Монохром на коже", price: "112.00$", img: "./женская одежда/набор/Монохром на коже.jpg" },
+          { title: "Набор: Осенний манифест", price: "164.00$", img: "./женская одежда/набор/Осенний манифест.jpg" },
+          { title: "Набор: Пальто на выдохе", price: "123.00$", img: "./женская одежда/набор/Пальто на выдохе.jpg" },
+          { title: "Набор: Шоколадный город", price: "184.00$", img: "./женская одежда/набор/шоколадный город.jpg" },
+          { title: "Набор: Остановка: сентябрь", price: "134.00$", img: "./женская одежда/набор/Остановка сентябрь.jpg" },
+        ]
+      },
+      kids: {
+        single: [
+          { title: "Кофты", price: "25.00$", img: "./детская одежда/одиночная одежда/кофты.jpg" },
+          { title: "Куртка", price: "30.00$", img: "./детская одежда/одиночная одежда/куртка.jpg" },
+          { title: "Носочки", price: "20.00$", img: "./детская одежда/одиночная одежда/носочки.jpg" },
+          { title: "Полосатый свитер", price: "40.00$", img: "./детская одежда/одиночная одежда/полосатый свитер.jpg" },
+          { title: "Штаны", price: "28.00$", img: "./детская одежда/одиночная одежда/штаны.jpg" },
+          { title: "Бомберы", price: "10.00$", img: "./детская одежда/одиночная одежда/Бомберы.jpg" },
+          { title: "Детский комбенизон от Zara", price: "23.00$", img: "./детская одежда/одиночная одежда/Детский комбенизон Zara.jpg" },
+          { title: "Куртка белая от the north face", price: "15.00$", img: "./детская одежда/одиночная одежда/Куртка белая the north face.jpg" },
+          { title: "Куртка черная jn the north face", price: "52.00$", img: "./детская одежда/одиночная одежда/Куртка черная the north face.jpg" },
+          { title: "Обувь jordan", price: "28.00$", img: "./детская одежда/одиночная одежда/Обувь jordan.jpg" },
+          { title: "Халат", price: "31.00$", img: "./детская одежда/одиночная одежда/Халат.jpg" },
+          { title: "Шапки", price: "20.00$", img: "./детская одежда/одиночная одежда/Шапки.jpg" },
+        ],
+        set: [
+          { title: "Набор: Карамельное утро", price: "85.00$", img: "./детская одежда/набор/Карамельное утро.jpg" },
+          { title: "Набор: Кофейный уют", price: "65.00$", img: "./детская одежда/набор/Кофейный уют.jpg" },
+          { title: "Набор: Крабик на прогулке", price: "90.00$", img: "./детская одежда/набор/Крабик на прогулке.jpg" },
+          { title: "Набор: Летний бриз", price: "120.00$", img: "./детская одежда/набор/Летний бриз.jpg" },
+          { title: "Набор: Морской бриз", price: "110.00$", img: "./детская одежда/набор/Морской бриз.jpg" },
+          { title: "Набор: Будущий модник", price: "100.00$", img: "./детская одежда/набор/Будущий модник.jpg" },
+          { title: "Набор: Капсула на осень", price: "110.00$", img: "./детская одежда/набор/Капсула на осень.jpg" },
+          { title: "Набор: Маленький стиль", price: "140.00$", img: "./детская одежда/набор/Маленький стиль.jpg" },
+          { title: "Набор: Мини Look", price: "100.00$", img: "./детская одежда/набор/Мини Look.jpg" },
+          { title: "Набор: Осенний уют", price: "113.00$", img: "./детская одежда/набор/Осенний уют.jpg" },
+          { title: "Набор: Сказочный набор", price: "120.00$", img: "./детская одежда/набор/Сказочный набор.jpg" },
+          { title: "Набор: Яркое детство", price: "150.00$", img: "./детская одежда/набор/Яркое детство.jpg" },
+        ]
+      }
+    };
+
+    const cart = [];
+
+    function addToCart(product) {
+      cart.push(product);
+      updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+      const cartCount = document.getElementById('cart-count');
+      const cartItems = document.getElementById('cart-items');
+      cartCount.textContent = cart.length;
+      cartItems.innerHTML = '';
+
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${item.title}</strong> — ${item.price}`;
+        cartItems.appendChild(li);
+      });
+    }
+
+    function toggleCart() {
+      const cartBox = document.getElementById('cart');
+      cartBox.style.display = cartBox.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function renderProductGroup(containerId, productArray) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      container.innerHTML = '';
+      productArray.forEach(product => {
+        const div = document.createElement('div');
+        div.className = 'product';
+        div.innerHTML = `
+          <img src="${product.img}" alt="${product.title}">
+          <h3>${product.title}</h3>
+          <p>${product.price}</p>
+          <button onclick='addToCart(${JSON.stringify(product)})'>Добавить в корзину</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleCategory(id) {
+      document.querySelectorAll('.category-block').forEach(cat => {
+        cat.style.display = cat.id === id ? (cat.style.display === 'block' ? 'none' : 'block') : 'none';
+      });
+    }
+
+    function toggleSub(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'grid' ? 'none' : 'grid';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProductGroup('men-single', products.men.single);
+      renderProductGroup('men-set', products.men.set);
+      renderProductGroup('women-single', products.women.single);
+      renderProductGroup('women-set', products.women.set);
+      renderProductGroup('kids-single', products.kids.single);
+      renderProductGroup('kids-set', products.kids.set);
+    });
+  </script>
+</body>
+</html>
