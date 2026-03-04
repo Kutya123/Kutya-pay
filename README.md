@@ -59,6 +59,6 @@ DOM Manipulation
 ![Desktop screen](./img.png)
 
 ## Мобильная версия
-[](./mobile.png)
+![](./mobile.png)
 
 [Посмотреть DEMO версию](https://imaginative-biscuit-143b18.netlify.app/)
