@@ -4,4 +4,4 @@
 
 ![Desktop screen](./img.png)
 
-[](https://imaginative-biscuit-143b18.netlify.app/)
+[Демо](https://imaginative-biscuit-143b18.netlify.app/)
