@@ -4,6 +4,12 @@
 
 Проект реализует систему категорий, подкатегорий, динамическую загрузку товаров и корзину с подсчётом количества товаров.
 
+## Компьютерная версия
+![Desktop screen](./img.png)
+
+## Мобильная версия
+![](./mobile.png)
+
 ## 🌍 О проекте
 
 Kutya Pay Store — это онлайн-магазин с тремя основными категориями:
@@ -54,11 +60,5 @@ CSS3 (Flexbox + Grid)
 Vanilla JavaScript
 
 DOM Manipulation
-
-## Компьютерная версия
-![Desktop screen](./img.png)
-
-## Мобильная версия
-![](./mobile.png)
 
 [Посмотреть DEMO версию](https://imaginative-biscuit-143b18.netlify.app/)
